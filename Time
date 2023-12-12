@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>스탑워치</title>
+    <link href="style.css" rel ="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>스톱워치</h2>
+        <h1>
+            <span id="minute">00</span>:<span id="secodns">00</span>:<span id="tenMills">00</span>
+        </h1>
+        <button id="bt_start">Start</button>
+        <button id="bt_stop">Stop</button>
+        <button id="bt_reset">Reset</button>
+    </div>
+    <script src ="script.js"></script>
+</body>
+</html>
+*{box-sizing: border-box;}
+html ,body{ margin:0; background-color: bisque;}
+
+.container{
+    width : 80%; min-width: 320px; max-width: 640px;
+    margin: 10px auto; padding: 5px 0 15px;
+    text-align: center; border: 1px solid purple;
+    border-radius: 16px;
+}
+
+
+h2{color: blueviolet}
+h1{color:blueviolet}
+
+h1>span{
+    display:inline-block;
+    width : 40px;
+}
+
+button{
+    color :white; background-color:pink;
+    font-size: 16px; padding :6px;
+    width: 100px; border: none; border-radius: 3px;
+    cursor: pointer;
+
+}
+
+button:active{
+    color:lightblue;
+    background-color: darkcyan;
+
+}
+
+let minutes =0;
+let seconds =0;
+let tenMills =0;
+
+const appendTens = document.getElementById("tenMills");
+const appendSeconds = document.getElementById("secodns");
+const appendMinutes = document.getElementById("minute");
+const buttonStart = document.getElementById("bt_start");
+const buttonStop = document.getElementById("bt_stop");
+const buttonReset = document.getElementById("bt_reset");
+
+let IntervalId;
+
+
+
+buttonStart.onclick = function(){
+    IntervalId = setInterval(operateTimer,10)
+}
+
+buttonStop.onclick = function(){
+    clearInterval(IntervalId)
+}
+
+buttonReset.onclick = function(){
+    clearInterval(IntervalId)
+    tenMills =0; seconds=0;minutes=0;
+    appendTens.textContent = "00"
+    appendSeconds.textContent = "00"
+    appendMinutes.textContent = "00"
+}
+
+
+function operateTimer(){
+    tenMills++;
+    appendTens.textContent = tenMills > 9 ? tenMills : '0' + tenMills
+    if(tenMills>99){
+        seconds++;
+        appendSeconds.textContent =seconds > 9 ?seconds : '0' + seconds
+        tenMills = 0
+        appendTens.textContent = "00"
+    }
+    if(seconds>59) {
+        minutes++;
+        appendMinutes.textContent = minutes > 9?minutes : '0' + minutes
+        seconds = 0
+        appendSeconds.textContent = "00"
+    }
+    
+}
